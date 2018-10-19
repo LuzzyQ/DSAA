@@ -1,9 +1,11 @@
 #include <iostream>
+#include<string>
+
 using namespace std;
 int main(){
-    cout << "hello world";
+    string s= "hello world";
     int i=3;
-    cout <<(double)i/2;
+    cout <<s.substr(-4,3);
     return 0;
 }
 
