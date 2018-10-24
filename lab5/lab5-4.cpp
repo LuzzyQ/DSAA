@@ -1,10 +1,12 @@
 #include<iostream>
-#include<string>
+#include<cstring>
+#include<cstdio>
 
 using namespace std;
 int test,m,n;
-string str;
-int nextList[100000/3];
+char str[100000];
+int count;
+int nextList[100000];
 void mknext(string key,int a){
     for (int i=1,j=0;i<a;i++){
         while(j>0&&key[i]!=key[j])
@@ -14,29 +16,30 @@ void mknext(string key,int a){
         nextList[i]=j;
     }
 }
-bool kmp(string mid,string key){
-    int a=key.length();
-    int len =mid.length();
-    for(int i=0,j=0;i<len;i++){
-        while(j>0&&mid[i]!=key[j])
+bool kmp(int a){
+    count=0;
+    bool flag=false;
+    for(int i=a,j=0;i<n-a;i++){
+        while(j>0&&str[i]!=str[j])
             j=nextList[j-1];
-        if(mid[i]==key[j])
+        if(str[i]==str[j])
             j++;
-        if(j==a)
+        if(j==a){
             return true;
+        }
+            
     }
     return false;
 }
 int found(){
     m=n/3;
     for(int i=m;i>0;i--){
-        string lft=str.substr(0,i);
-        // cout<<lft<<" "<<str.substr(n-i,i)<<endl;
-        if(lft==str.substr(n-i,i)){
-            string mid=str.substr(i,n-2*m);
-            mknext(lft,i);
-            if(kmp(mid,lft))
-                return i;
+        // cout << str.substr(0,i)<< " "<<str.substr(n-i,i) <<endl;
+        if(memcmp(str,str+n-i,i)==0){
+            if(kmp(i)){
+                
+                    return i;
+            }
         }
     }
     return 0;
@@ -45,8 +48,12 @@ int found(){
 int main(){
     cin >> test;
     while(test--){
-        cin >>n>>str;
-        cout<<found()<<endl;
+        // cin >>n>>str;
+        scanf("%d",&n);
+        scanf("%s",&str[0]);
+        mknext(str,n);
+        // cout<<found()<<endl;
+        printf("%d\n",found());
     }
 
 }

@@ -1,35 +1,52 @@
 #include<iostream>
-#include<string>
+#include<cstring>
 
 using namespace std;
 int test,n,m;
 string S,T;
 int nextList[100000];
-int mknext(){
+int matches[100000];
+void mknext(){
+    // memset(nextList,0,100000);
     int i,j;
     nextList[0]=0;
-    for(i=1, j=0;i<m;i++){
-        while(j>0&&T[i]!=S[j])
+    for(i=1, j=0;i<n-1;i++){
+        while(j>0&&S[i]!=S[j])
             j=nextList[j-1];
-        if(T[i]==S[j]){
+        if(S[i]==S[j]){
             j++;
         }
-        if(j==n)
-            return n;
         nextList[i]=j;
     }
-    return nextList[m-1];
+    
+}
+int match(){
+    matches[0]=0;
+    for(int i=1,j=0;i<m;i++){
+        while(j>0&&T[i]!=S[j])
+            j=nextList[j-1];
+        if(T[i]==S[j])
+            j++;
+        matches[i]=j;
+        // cout << j<<" ";
+        if(j==n-1)
+            j=nextList[j-1];
+        
+    }
+    return matches[m-1];
 }
 int main(){
     cin >> test;
     while(test--){
         cin >>n>>m>>S>>T;
-        int num = mknext();
-        // string s=S.substr(0,num);
-        cout <<num;
-        if(num!=0)
-            cout<<" "<<S.substr(0,num); 
-        cout<<endl;
-        // printf("%d %s",num,s.c_str());
+        mknext();
+        int num =match();
+        // cout<<num;
+        string s=S.substr(0,num);
+        printf("%d %s\n",num,s.c_str());
+        // if(num!=0){
+        //     cout<<" "<<S.substr(0,num);
+        // }
+        // cout <<endl;
     }
 }

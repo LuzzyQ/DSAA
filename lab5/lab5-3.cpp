@@ -17,12 +17,6 @@ void mknext(){
             j++;
         nextList[i]=j;
     }
-    // for(int a=0;a<m;a++){
-
-    //     cout <<nextList[a]<< " ";
-    // }
-    // cout<<nextList[m-1]<<endl;
-    // cout <<"mknext ok\n";
 }
 int kmp(){
     mknext();
@@ -37,9 +31,7 @@ int kmp(){
         }
         if (j==m){
             count++;
-            // cout <<nextList[j-1];
             j=nextList[j-1];
-            // j=0;
         }
 
     }
